@@ -54,7 +54,7 @@ You can either run rDock directly from the build location, or
 install the binaries and data files to a new location.
 in order to install in other location run:
 ```
-export PREFIX=<path to the destination folder>```
+export PREFIX=<path to the destination folder>
 make install
 ```
 or, for a more compact notation:
