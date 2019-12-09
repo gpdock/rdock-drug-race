@@ -50,7 +50,7 @@ from the base directory (where this file is located) run
 ```make build```  
 this will compile and link libRbt and rDock binaries.
 
-2) test:
+2) test:  
 NOTE: this step is not mandatory, but it is highly recommended.
 to compile and run tests, run  
 ```make test```  
@@ -123,7 +123,7 @@ use them:
 | | Must be provided in the form of '-L<path>' to be |
 | | passed directly to the linker. Defaults is empty. |
 
-these are the available targets in the Makefile, briefly explained:
+these are the available targets in the Makefile, briefly explained:  
 | target | description |
 |---|---|
 | build | Builds the library and binaries. Default target. |
