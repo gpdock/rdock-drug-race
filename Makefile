@@ -7,7 +7,7 @@
 ##	folders.
 
 ## for detailed information on how to use this Makefile, please read the
-## Advanced Build Instructions section in INSTALL file
+## Advanced Build Instructions section in README.md file
 
 
 MODE		:=	$(if $(MODE),$(MODE),RELEASE)
@@ -51,10 +51,13 @@ DLOBJ				:= $(subst src/, obj/, $(DLSRC_$(DAYLIGHT):.cxx=.o))
 
 EXESRC_DAYLIGHT_YES	:= $(shell find src/exe -type f -name 'rb*.cxx')
 EXESRC_DAYLIGHT_NO	:= $(shell find src/exe -type f \( -name 'rb*.cxx' ! -name 'rbtether.cxx' ! -name 'rbconvgrid.cxx' \))
-EXEBIN				= $(subst src/exe, bin/, $(EXESRC_DAYLIGHT_$(DAYLIGHT):.cxx=))
+EXEBIN				= $(subst src/exe/, bin/, $(EXESRC_DAYLIGHT_$(DAYLIGHT):.cxx=))
 
 TESTPRM				= $(shell find test/RBT_HOME/*.prm)
 TEST_AS				= $(TESTPRM:.prm=.as)
+
+export LD_LIBRARY_PATH =./lib:$$LD_LIBRARY_PATH
+export RBT_HOME	= ./test/RBT_HOME
 
 .PHONY: build_lib build_exes build_test build clean veryclean rebuild test install
 
@@ -76,11 +79,14 @@ build_test: build_exes
 clean:
 	rm -rf obj
 
+clean_test:
+	rm -rf test/unit_test $(TEST_AS) restart.sd test/RBT_HOME/1YET_test_out.*
+
 veryclean:
 	$(MAKE) clean
+	$(MAKE) clean_test
 	rm -rf lib/libRbt.so
 	rm -rf $(EXEBIN)
-	rm -rf test/unit_test $(TEST_AS)
 
 rebuild:
 	$(MAKE) veryclean
@@ -89,10 +95,9 @@ rebuild:
 test: build_test
 	$(MAKE) $(TEST_AS)
 	@echo "Running rDock unit tests..."
-	@export LD_LIBRARY_PATH=$(RBT_ROOT)/lib:$LD_LIBRARY_PATH
-	@./test/unit_test
-	@$(RBT_ROOT)/bin/rbdock -r1YET_test.prm -i ./test/RBT_HOME/1YET_c.sd -p dock.prm -n 1 -s 48151623 -o ./test/RBT_HOME/1YET_test_out > ./test/RBT_HOME/1YET_test_out.log
-	@python ./test/RBT_HOME/check_test.py ./test/RBT_HOME/1YET_reference_out.sd ./test/RBT_HOME/1YET_test_out.sd
+	./test/unit_test
+	$(RBT_ROOT)/bin/rbdock -r1YET_test.prm -i ./test/RBT_HOME/1YET_c.sd -p dock.prm -n 1 -s 48151623 -o ./test/RBT_HOME/1YET_test_out > ./test/RBT_HOME/1YET_test_out.log
+	python ./test/RBT_HOME/check_test.py ./test/RBT_HOME/1YET_reference_out.sd ./test/RBT_HOME/1YET_test_out.sd
 
 install:
 	mkdir -p $(PREFIX)
@@ -103,7 +108,7 @@ install:
 ################################
 test/RBT_HOME/%.as:	test/RBT_HOME/%.prm
 	@echo "Cavity mapping of $<"
-	@$(RBT_ROOT)/bin/rbcavity -r$< -was
+	$(RBT_ROOT)/bin/rbcavity -r$< -was
 
 ##############################
 ## linking of libRbt libary ##
