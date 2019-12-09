@@ -22,6 +22,7 @@ Make sure you have the following packages installed:
 - make
 - libpopt Command-line argument processing (run-time)
 - popt-devel Command-line argument processing (compile-time)
+
 in debian/ubuntu this can be installed by:
 ```
 apt install g++ make libpopt-dev libpopt0
@@ -67,10 +68,10 @@ make install
 ```
 will create and populate /opt/rdock/lib /opt/rdock/bin and /opt/rdock/data
 #### 4. run rDock:
-rDock requires several environment variables to be set.
-First, RBT_ROOT, which must point to the installation directory
+rDock requires several environment variables to be set.<br>
+First, RBT_ROOT, which must point to the installation directory<br>
 Second, libRbt.so file must be accessible, either by having it registered
-by ld or by prepending $RBT_ROOT/lib to LD_LIBRARY_PATH variable
+by ld or by prepending $RBT_ROOT/lib to LD_LIBRARY_PATH variable<br>
 Third and last (this is 'optional'), rDock binaries should be accessible
 from PATH, which can be done by prepending $RBT_ROOT/bin to PATH variable.
 this can be put in any profile file or an environment module:
@@ -82,12 +83,12 @@ export PATH=$RBT_ROOT/bin:$PATH
 ## advanced building instructions:
 the provided Makefile has a number of options and configurable variables
 and flags to provide some flexibility and adaptability to building and
-testing processes.
-these are the configurable variables, with a brief explanation on how t
+testing processes.<br>
+these are the configurable variables, with a brief explanation on how to
 use them:
 
 | variable | Description |
-|--|--|
+|---|---|
 | MODE | RELEASE/DEBUG. RELEASE mode uses optimization flags, DEBUG uses profiling flags. Default is RELEASE |
 | PREFIX | Path where the build artifacts are to be installed. Default is ./build/\<MODE> |
 | CXX | C++ Compiler. Default is g++ |
@@ -98,9 +99,7 @@ use them:
 | INCDIR | Additional paths for compiler to look for headers. Must be provided in the form of '-I\<path>' to be passed directly to the compiler. Default is empty. |
 | LIBDIR | Additional paths for linker to lookk for libraries. Must be provided in the form of '-L\<path>' to be passed directly to the linker. Defaults is empty. |
 
-these are the available targets in the Makefile, briefly explained:
-
-  
+these are the available targets in the Makefile, briefly explained:<br>
 
 | target | description |
 |---|---|
